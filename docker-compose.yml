@@ -8,13 +8,18 @@ services:
     environment:
       - API_NAME=api-1
       - API_CSV=http://api-2:9090,http://api-3:9090
+      - PORT=9090
 
   api-2:
     image: memotoro/api-rs
     environment:
       - API_NAME=api-2
+      - API_CSV=""
+      - PORT=9090
 
   api-3:
     image: memotoro/api-rs
     environment:
       - API_NAME=api-3
+      - API_CSV=""
+      - PORT=9090
