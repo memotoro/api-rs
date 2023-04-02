@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  api1:
+    image: memotoro/api-rs
+    ports:
+      - "9090:9090"
+    environment:
+      - API_NAME=api-1
+      - API_CSV=http://api-2:9090,http://api-3:9090
+
+  api-2:
+    image: memotoro/api-rs
+    environment:
+      - API_NAME=api-2
+
+  api-3:
+    image: memotoro/api-rs
+    environment:
+      - API_NAME=api-3
