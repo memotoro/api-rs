@@ -1,4 +1,5 @@
 use api_rs::config::api::Config;
+use api_rs::handler::metrics::process_metrics;
 use api_rs::handler::processor::{
     failure_processor, request_processor, response_processor, span_processor,
 };
@@ -25,6 +26,7 @@ async fn main() {
     let app = Router::new()
         .route("/", get(root))
         .route("/apis", get(proxy))
+        .route("/metrics", get(process_metrics))
         .layer(
             TraceLayer::new_for_http()
                 .make_span_with(span_processor)
