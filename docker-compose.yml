@@ -1,7 +1,6 @@
-version: '3'
-
 services:
-  api1:
+
+  api-1:
     image: memotoro/api-rs
     ports:
       - "9090:9090"
