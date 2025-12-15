@@ -1,0 +1,38 @@
+steps:
+  - id: "branch-name"
+    name: "alpine"
+    entrypoint: "sh"
+    args:
+      - "-c"
+      - |
+        echo "********************************************************************************"
+        echo "$BRANCH_NAME"
+        echo "********************************************************************************"
+
+  - id: "docker-build"
+    name: docker
+    entrypoint: sh
+    args:
+      - "-c"
+      - |
+        set -euo pipefail
+
+        docker build -t europe-west2-docker.pkg.dev/testing-project-0801/images/api-rs:${COMMIT_SHA} .
+    waitFor:
+      - branch-name
+
+  - id: "docker-push"
+    name: docker
+    entrypoint: sh
+    args:
+      - "-c"
+      - |
+        set -euo pipefail
+
+        docker push europe-west2-docker.pkg.dev/testing-project-0801/images/api-rs:${COMMIT_SHA}
+    waitFor:
+      - docker-build
+
+options:
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
+  machineType: 'N1_HIGHCPU_8'
